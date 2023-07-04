@@ -5,11 +5,11 @@ class Product extends Component{
         super();
 
         this.state = {
-            monster : []
+            monster : [],
+            inputVal: ''
         };        
     }
     componentDidMount(){
-        
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(res => res.json() )
         .then(data => this.setState(
@@ -21,13 +21,25 @@ class Product extends Component{
                 console.log(this.state.monster)
             }
         ))
-        
+     
     }
     
     render(){
-        console.log("Set state",this.setState())
+        let neArr = this.state.monster.filter(
+            (val) => {
+                 console.log("ddd",val)
+                return val.name.toLocaleLowerCase().includes( this.state.inputVal);
+            }
+        );
+        
     return <>
-      {this.state.monster.map(data => <p> ${data.name} </p>)} 
+       <input className="searchbox" placeholder="Search" type="text" onChange={(event) => {
+       let inputfiled  = event.target.value.toLocaleLowerCase();
+            this.setState(()=>{
+              return {inputVal:inputfiled}
+             })
+       }}/>
+      {neArr.map(data => <p> ${data.name} </p>)} 
         </>
 
 }
