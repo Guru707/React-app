@@ -9,6 +9,7 @@ class Product extends Component{
             inputVal: ''
         };        
     }
+ 
     componentDidMount(){
         fetch('https://jsonplaceholder.typicode.com/users')
         .then(res => res.json() )
@@ -18,27 +19,30 @@ class Product extends Component{
                 return {monster : data}                
             },
             () => {
-                console.log(this.state.monster)
+               // console.log(this.state.monster)
             }
         ))
      
     }
-    
+     clickSearch = (event) => {
+        let inputfiled  = event.target.value.toLocaleLowerCase();
+             this.setState(()=>{
+               return {inputVal:inputfiled}
+              });
+        }
     render(){
-        let neArr = this.state.monster.filter(
+       const {monster, inputVal  } = this.state;
+       console.log("new state" , monster, this.state)
+       const {clickSearch  } = this;
+       console.log("box value ", monster)
+        let neArr = monster.filter(
             (val) => {
-                 console.log("ddd",val)
-                return val.name.toLocaleLowerCase().includes( this.state.inputVal);
+                return val.name.toLocaleLowerCase().includes( inputVal);
             }
         );
         
     return <>
-       <input className="searchbox" placeholder="Search" type="text" onChange={(event) => {
-       let inputfiled  = event.target.value.toLocaleLowerCase();
-            this.setState(()=>{
-              return {inputVal:inputfiled}
-             })
-       }}/>
+       <input className="searchbox" placeholder="Search" type="text" onChange={clickSearch}/>
       {neArr.map(data => <p> ${data.name} </p>)} 
         </>
 
