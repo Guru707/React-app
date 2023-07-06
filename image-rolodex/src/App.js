@@ -53,11 +53,13 @@ class App extends Component{
       );
       
   return <>
-    
-     <SearchBox  onChangeHander={clickSearch} placeholder={'Search List'} />
+    <div className='pt-4'>
+        <h1 className='app-title'>Cat  List</h1>
+     <SearchBox  onChangeHander={clickSearch} className={"searchbox"} placeholder={'Search List'} />
      <CardList lists={neArr}  />
+     
+      </div>
       </>
-
 }
 }
 
